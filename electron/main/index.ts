@@ -2,6 +2,8 @@ import { app, BrowserWindow, shell, ipcMain } from 'electron'
 import { release } from 'node:os'
 import { join } from 'node:path'
 import { update } from './update'
+import { getCenter } from './screen'
+import { initShortCut } from './shortcut'
 
 // The built directory structure
 //
@@ -35,15 +37,23 @@ if (!app.requestSingleInstanceLock()) {
 // Read more on https://www.electronjs.org/docs/latest/tutorial/security
 // process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true'
 
-let win: BrowserWindow | null = null
+let mainWin: BrowserWindow | null = null
+const w = 900
+const h = 540
 // Here, you can also use other preload
 const preload = join(__dirname, '../preload/index.js')
 const url = process.env.VITE_DEV_SERVER_URL
 const indexHtml = join(process.env.DIST, 'index.html')
 
-async function createWindow() {
-  win = new BrowserWindow({
+async function createMainWindow() {
+  mainWin = new BrowserWindow({
     title: 'Main window',
+    focusable: true,
+    resizable: false,
+    width: w,
+    height: h,
+    titleBarStyle: 'hidden',
+    alwaysOnTop: true,
     icon: join(process.env.VITE_PUBLIC, 'favicon.ico'),
     webPreferences: {
       preload,
@@ -56,40 +66,41 @@ async function createWindow() {
   })
 
   if (url) { // electron-vite-vue#298
-    win.loadURL(url)
+    mainWin.loadURL(url)
     // Open devTool if the app is not packaged
-    win.webContents.openDevTools()
+    mainWin.webContents.openDevTools()
   } else {
-    win.loadFile(indexHtml)
+    mainWin.loadFile(indexHtml)
   }
 
   // Test actively push message to the Electron-Renderer
-  win.webContents.on('did-finish-load', () => {
-    win?.webContents.send('main-process-message', new Date().toLocaleString())
+  mainWin.webContents.on('did-finish-load', () => {
+    mainWin?.webContents.send('main-process-message', new Date().toLocaleString())
   })
 
   // Make all links open with the browser, not with the application
-  win.webContents.setWindowOpenHandler(({ url }) => {
+  mainWin.webContents.setWindowOpenHandler(({ url }) => {
     if (url.startsWith('https:')) shell.openExternal(url)
     return { action: 'deny' }
   })
 
   // Apply electron-updater
-  update(win)
+  update(mainWin)
+  initMain(mainWin)
 }
 
-app.whenReady().then(createWindow)
+app.whenReady().then(createMainWindow)
 
 app.on('window-all-closed', () => {
-  win = null
+  mainWin = null
   if (process.platform !== 'darwin') app.quit()
 })
 
 app.on('second-instance', () => {
-  if (win) {
+  if (mainWin) {
     // Focus on the main window if the user tried to open another
-    if (win.isMinimized()) win.restore()
-    win.focus()
+    if (mainWin.isMinimized()) mainWin.restore()
+    mainWin.focus()
   }
 })
 
@@ -98,7 +109,7 @@ app.on('activate', () => {
   if (allWindows.length) {
     allWindows[0].focus()
   } else {
-    createWindow()
+    createMainWindow()
   }
 })
 
@@ -118,4 +129,15 @@ ipcMain.handle('open-win', (_, arg) => {
     childWindow.loadFile(indexHtml, { hash: arg })
   }
 })
+
+function initMain(mainWin: BrowserWindow) {
+  mainWin.setMenu(null)
+  mainWin.setMaximumSize(w, h)
+  mainWin.setMinimumSize(w, h)
+  const { x, y } = getCenter(w, h)
+
+  mainWin.setPosition(x, y)
+
+  initShortCut(mainWin)
+}
 

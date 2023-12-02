@@ -11,3 +11,14 @@ lstat(cwd()).then(stats => {
 }).catch(err => {
   console.error(err)
 })
+
+
+
+const helloWorld = () => {
+  console.log("this is hello worl222d");
+}
+
+
+export {
+  helloWorld
+}
