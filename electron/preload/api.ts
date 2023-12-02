@@ -3,24 +3,28 @@ import * as cmd from 'node:child_process'
 import util from 'node:util'
 
 const exec = util.promisify(cmd.exec)
+const spawn = util.promisify(cmd.spawn)
 
 class api {
+
+  private mainWindow: BrowserWindow
+
+  constructor(mainWindow: BrowserWindow) {
+    this.mainWindow = mainWindow
+  }
+
   public hello = () => {
     return 'hello world'
   }
 
-  public execCommand = async ({ data }: any) => {
-    const { command, args } = data
-    if (args && args.length > 0) {
-      return await exec(`${command} ${args?.join(' ')}`)
-    }
-    return await exec(command)
+  public hide = () => {
+    this.mainWindow.hide()
   }
 }
 
 
 const registerApi = (mainWindow: BrowserWindow) => {
-  const a = new api()
+  const a = new api(mainWindow)
 
   ipcMain.on('launcher-api', async (event, arg) => {
     const window = arg.winId ? BrowserWindow.fromId(arg.winId) : mainWindow;

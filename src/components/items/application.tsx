@@ -40,6 +40,13 @@ const AppImage = ({ app }: { app: Application }) => {
 
 const application = () => {
   const { apps, loading } = useApplications()
+  const runApplication = (app: Application) => {
+    const command = app.exec.replace("%u", "").replace("%U", "")
+    const { output } = window.launcher.execCommand(command)
+    console.log(output);
+    window.launcher.hide()
+  }
+
   return (
     <>
       {loading && <Command.Loading>Fetching words…</Command.Loading>}
@@ -48,6 +55,7 @@ const application = () => {
           <Command.Item
             key={item.name}
             value={item.name}
+            onSelect={() => { runApplication(item) }}
           >
             <AppImage app={item} />
             {item.name}

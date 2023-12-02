@@ -2,6 +2,8 @@
 interface Window {
   launcher: {
     hello(): string
-    execCommand(command: string, args?: Array<string>): any
+    async execCommand(command: string, args?: Array<string>): any
+    async spawn(command: string, args?: Array<string>): any
+    hide(): void
   };
 }

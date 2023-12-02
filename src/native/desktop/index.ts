@@ -43,8 +43,8 @@ const pattern = (path: string) => {
     `/usr/share/icons/Adwaita/symbolic/legacy/${path}-symbolic.svg`,
     `/usr/share/icons/breeze/actions/symbolic/${path}.svg`,
     `/usr/share/icons/Adwaita/symbolic/legacy/${path}.svg`,
-  ]
-}
+  ];
+};
 
 interface Application {
   name: string;
@@ -57,24 +57,24 @@ interface Application {
 const iconCache = new Map<string, string>();
 const getIcon = (app: Application) => {
   if (app.icon === "") {
-    return null
+    return null;
   }
 
   if (iconCache.has(app.icon)) {
-    return iconCache.get(app.icon)
+    return iconCache.get(app.icon);
   }
 
-  const p = pattern(app.icon)
+  const p = pattern(app.icon);
   for (let i = 0; i < p.length; i++) {
     const item = p[i];
     if (fs.existsSync(item)) {
-      const image = "file://" + item
-      iconCache.set(app.icon, image)
-      return image
+      const image = "file://" + item;
+      iconCache.set(app.icon, image);
+      return image;
     }
   }
-  return null
-}
+  return null;
+};
 
 const getApplications = async () => {
   const applications: Application[] = [];
@@ -111,15 +111,14 @@ const getApplications = async () => {
           }
         });
 
-
         if (app.name === undefined || app.exec === undefined) {
           return;
         }
         if (existName.has(app.name)) {
-          return
+          return;
         }
 
-        existName.add(app.name)
+        existName.add(app.name);
 
         applications.push(app);
       }));
@@ -129,8 +128,4 @@ const getApplications = async () => {
   return applications;
 };
 
-export {
-  getApplications,
-  getIcon,
-  type Application
-}
+export { type Application, getApplications, getIcon };
