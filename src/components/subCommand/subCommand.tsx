@@ -1,4 +1,4 @@
-import { Command } from 'cmdk'
+import { Command } from '@/cmdk'
 import React from 'react'
 import * as Popover from '@radix-ui/react-popover'
 import { WindowIcon, FinderIcon, StarIcon } from '../icon'

@@ -1,5 +1,5 @@
 import { Application, getApplications } from "@/native"
-import { Command } from "cmdk"
+import { Command } from "@/cmdk"
 import React, { useEffect, useState } from "react"
 import { app } from 'electron';
 import { getIcon } from "@/native/desktop";

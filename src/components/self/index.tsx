@@ -1,4 +1,4 @@
-import { Command } from 'cmdk'
+import { Command } from '@/cmdk'
 import React, { useState } from 'react'
 import { RaycastLightIcon } from '../icon'
 import { SubCommand } from '../subCommand'

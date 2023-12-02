@@ -1,4 +1,4 @@
-import { Command } from "cmdk";
+import { Command } from "@/cmdk";
 
 function SubItem({ children, shortcut }: { children: React.ReactNode; shortcut: string }) {
   return (
