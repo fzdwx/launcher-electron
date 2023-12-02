@@ -1,13 +1,15 @@
 import { BrowserWindow, globalShortcut } from "electron";
+import { toCenter } from "./screen";
 
-const initShortCut = (mainWin: BrowserWindow) => {
+const initShortCut = (win: BrowserWindow, w: number, h: number) => {
   globalShortcut.register('Alt+Space', () => {
-    if (mainWin.isVisible()) {
-      mainWin.hide()
-      mainWin.blur()
+    if (win.isVisible()) {
+      win.hide()
+      win.blur()
     } else {
-      mainWin.show()
-      mainWin.focus()
+      win.show()
+      win.focus()
+      toCenter(win, w, h)
     }
   })
 }

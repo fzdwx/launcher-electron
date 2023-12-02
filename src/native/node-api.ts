@@ -1,4 +1,5 @@
 import { lstat } from 'node:fs/promises'
+import * as fs from 'node:fs'
 import { cwd } from 'node:process'
 import { ipcRenderer } from 'electron'
 
@@ -15,6 +16,10 @@ lstat(cwd()).then(stats => {
 
 
 const helloWorld = () => {
+  fs.readFile('/home/like/.zshrc', (err, data) => {
+    if (err) throw err;
+    console.log(data.toString());
+  });
   console.log("this is hello worl222d");
 }
 

@@ -2,8 +2,9 @@ import { app, BrowserWindow, shell, ipcMain } from 'electron'
 import { release } from 'node:os'
 import { join } from 'node:path'
 import { update } from './update'
-import { getCenter } from './screen'
+import { toCenter } from './screen'
 import { initShortCut } from './shortcut'
+import initMainWin from './initMainWin';
 
 // The built directory structure
 //
@@ -84,9 +85,7 @@ async function createMainWindow() {
     return { action: 'deny' }
   })
 
-  // Apply electron-updater
-  update(mainWin)
-  initMain(mainWin)
+  initMainWin(mainWin, w, h)
 }
 
 app.whenReady().then(createMainWindow)
@@ -129,15 +128,4 @@ ipcMain.handle('open-win', (_, arg) => {
     childWindow.loadFile(indexHtml, { hash: arg })
   }
 })
-
-function initMain(mainWin: BrowserWindow) {
-  mainWin.setMenu(null)
-  mainWin.setMaximumSize(w, h)
-  mainWin.setMinimumSize(w, h)
-  const { x, y } = getCenter(w, h)
-
-  mainWin.setPosition(x, y)
-
-  initShortCut(mainWin)
-}
 
