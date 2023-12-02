@@ -44,6 +44,7 @@ export default () => {
       height: Height,
       titleBarStyle: 'hidden',
       alwaysOnTop: true,
+      transparent: true,
       icon: join(process.env.VITE_PUBLIC, 'favicon.ico'),
       webPreferences: {
         webSecurity: false,
@@ -59,7 +60,7 @@ export default () => {
     if (url) { // electron-vite-vue#298
       mainWin.loadURL(url)
       // Open devTool if the app is not packaged
-      mainWin.webContents.openDevTools()
+      // mainWin.webContents.openDevTools()
     } else {
       mainWin.loadFile(indexHtml)
     }

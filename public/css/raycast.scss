@@ -1,4 +1,6 @@
 .raycast {
+  background-color: var(--app-bg);
+
   [cmdk-root] {
     max-width: 640px;
     width: 100%;
@@ -16,15 +18,13 @@
 
       &:after {
         content: '';
-        background: linear-gradient(
-          to right,
-          var(--gray6) 20%,
-          var(--gray6) 40%,
-          var(--gray10) 50%,
-          var(--gray10) 55%,
-          var(--gray6) 70%,
-          var(--gray6) 100%
-        );
+        background: linear-gradient(to right,
+            var(--gray6) 20%,
+            var(--gray6) 40%,
+            var(--gray10) 50%,
+            var(--gray10) 55%,
+            var(--gray6) 70%,
+            var(--gray6) 100%);
         z-index: -1;
         position: absolute;
         border-radius: 12px;
@@ -85,13 +85,11 @@
 
   [cmdk-raycast-top-shine] {
     .dark & {
-      background: linear-gradient(
-        90deg,
-        rgba(56, 189, 248, 0),
-        var(--gray5) 20%,
-        var(--gray9) 67.19%,
-        rgba(236, 72, 153, 0)
-      );
+      background: linear-gradient(90deg,
+          rgba(56, 189, 248, 0),
+          var(--gray5) 20%,
+          var(--gray9) 67.19%,
+          rgba(7, 143, 143));
       height: 1px;
       position: absolute;
       top: -1px;
@@ -103,7 +101,7 @@
   }
 
   [cmdk-raycast-loader] {
-    --loader-color: var(--gray9);
+    --loader-color: #b81c1c;
     border: 0;
     width: 100%;
     width: 100%;
@@ -167,7 +165,7 @@
       margin-top: 8px;
     }
 
-    & + [cmdk-item] {
+    &+[cmdk-item] {
       margin-top: 4px;
     }
 
@@ -185,7 +183,7 @@
 
   [cmdk-list] {
     padding: 0 8px;
-    height: 393px;
+    height: 478px;
     overflow: auto;
     overscroll-behavior: contain;
     scroll-padding-block-end: 40px;
@@ -271,7 +269,7 @@
     margin: 4px 0;
   }
 
-  *:not([hidden]) + [cmdk-group] {
+  *:not([hidden])+[cmdk-group] {
     margin-top: 8px;
   }
 

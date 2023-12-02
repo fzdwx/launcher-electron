@@ -1,5 +1,5 @@
 {
-  "name": "electron-vite-react",
+  "name": "Launcher",
   "version": "2.2.0",
   "main": "dist-electron/main/index.js",
   "description": "Electron Vite React boilerplate.",
@@ -17,6 +17,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@radix-ui/react-popover": "^1.0.7",
+    "@radix-ui/themes": "^2.0.1",
     "cmdk": "^0.2.0",
     "electron-updater": "^6.1.7",
     "sass": "^1.69.5"

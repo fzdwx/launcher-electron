@@ -8,8 +8,8 @@ const initShortCut = (win: BrowserWindow) => {
       win.blur()
     } else {
       win.show()
-      win.focus()
       toCenter(win)
+      win.focus()
     }
   })
 }

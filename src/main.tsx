@@ -6,10 +6,14 @@ import 'virtual:uno.css'
 import '../public/css/index.scss'
 
 import '../public/css/raycast.scss'
+import '@radix-ui/themes/styles.css';
+import { Theme } from '@radix-ui/themes'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <App />
+    <Theme>
+      <App />
+    </Theme>
   </React.StrictMode>,
 )
 
