@@ -1,5 +1,14 @@
 .raycast {
-  background-color: var(--app-bg);
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  scrollbar-width: none;
+  /* firefox */
+  -ms-overflow-style: none;
+  /* IE 10+ */
+  overflow-x: hidden;
+  overflow-y: auto;
 
   [cmdk-root] {
     max-width: 640px;
@@ -101,7 +110,6 @@
   }
 
   [cmdk-raycast-loader] {
-    --loader-color: #b81c1c;
     border: 0;
     width: 100%;
     width: 100%;
@@ -115,6 +123,7 @@
     margin-bottom: 12px;
 
     &:after {
+      --loader-color: #34d399;
       content: '';
       width: 50%;
       height: 1px;
@@ -183,13 +192,13 @@
 
   [cmdk-list] {
     padding: 0 8px;
-    height: 478px;
-    overflow: auto;
+    min-height: 478px;
+    height: var(--cmdk-list-height);
+    overflow: inherit;
     overscroll-behavior: contain;
-    scroll-padding-block-end: 40px;
+    scroll-padding-block-end: 48px;
     transition: 100ms ease;
     transition-property: height;
-    padding-bottom: 40px;
   }
 
   [cmdk-raycast-open-trigger],
@@ -287,7 +296,7 @@
     height: 40px;
     align-items: center;
     width: 100%;
-    position: absolute;
+    position: fixed;
     background: var(--gray1);
     bottom: 0;
     padding: 8px;

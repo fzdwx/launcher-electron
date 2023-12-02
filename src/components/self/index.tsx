@@ -1,52 +1,48 @@
 import { Command } from 'cmdk'
-import React from 'react'
+import React, { useState } from 'react'
 import { RaycastLightIcon } from '../icon'
 import { SubCommand } from '../subCommand'
+import Application from '../items/application'
 
 const CommandMenu = () => {
   const inputRef = React.useRef<HTMLInputElement>(null)
-  const listRef = React.useRef(null)
+  const listRef = React.useRef<HTMLInputElement>(null)
   const [value, setValue] = React.useState('')
   React.useEffect(() => {
     inputRef.current?.focus()
   })
 
+
   const onValueChange = (v: string) => {
     setValue(v)
   }
+
   return (
-    <div className='dark'>
-      <Command className='raycast' label="Global Command Menu">
-        <div cmdk-raycast-top-shine="" />
-        <Command.Input value={value} onValueChange={onValueChange} autoFocus ref={inputRef} />
-        <hr cmdk-raycast-loader="" />
-        <Command.List ref={listRef}>
-          <Command.Empty>No results found.</Command.Empty>
+    <Command className='raycast' label="Global Command Menu">
+      <div cmdk-raycast-top-shine="" />
+      <Command.Input value={value} onValueChange={onValueChange} autoFocus ref={inputRef} />
+      <hr cmdk-raycast-loader="" />
+      <Command.List ref={listRef}>
+        <Command.Empty>No results found.</Command.Empty>
 
-          <Command.Group heading="Suggestions">
-            <Command.Item>a</Command.Item>
-            <Command.Item>b</Command.Item>
-            <Command.Separator />
-            <Command.Item>c</Command.Item>
-          </Command.Group>
+        <Application />
 
-          <Command.Item>Apple</Command.Item>
-        </Command.List>
+        <Command.Item>Apple</Command.Item>
+      </Command.List>
 
-        <div cmdk-raycast-footer="">
-          <RaycastLightIcon />
+      <div cmdk-raycast-footer="">
+        <RaycastLightIcon />
 
-          <button cmdk-raycast-open-trigger="">
-            Open Application
-            <kbd>↵</kbd>
-          </button>
+        <button cmdk-raycast-open-trigger="">
+          Open Application
+          <kbd>↵</kbd>
+        </button>
 
-          <hr />
+        <hr />
 
-          <SubCommand listRef={listRef} selectedValue={value} inputRef={inputRef} />
-        </div>
-      </Command>
-    </div>
+        <SubCommand listRef={listRef} selectedValue={value} inputRef={inputRef} />
+      </div>
+    </Command>
   )
 }
 

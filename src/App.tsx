@@ -5,7 +5,7 @@ import Self from '@/components/self';
 
 function App() {
   return (
-    <div className=''>
+    <div id='top'>
       <Self />
     </div>
   )
