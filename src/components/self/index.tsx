@@ -8,21 +8,31 @@ const CommandMenu = () => {
   })
 
   return (
-    <Command.Dialog className='raycast' open label="Global Command Menu">
-      <Command.Input autoFocus ref={inputRef} />
-      <Command.List>
-        <Command.Empty>No results found.</Command.Empty>
+    <div>
+      {/* <Command.Dialog className='raycast' open label="Global Command Menu">
+        <Command.Input autoFocus ref={inputRef} />
+        <Command.List>
+          <Command.Empty>No results found.</Command.Empty>
 
-        <Command.Group heading="Letters">
-          <Command.Item>a</Command.Item>
-          <Command.Item>b</Command.Item>
-          <Command.Separator />
-          <Command.Item>c</Command.Item>
-        </Command.Group>
+          <Command.Group heading="Letters">
+            <Command.Item>a</Command.Item>
+            <Command.Item>b</Command.Item>
+            <Command.Separator />
+            <Command.Item>c</Command.Item>
+          </Command.Group>
 
-        <Command.Item>Apple</Command.Item>
-      </Command.List>
-    </Command.Dialog>
+          <Command.Item>Apple</Command.Item>
+        </Command.List>
+      </Command.Dialog> */}
+
+      <div onClick={() => {
+        console.log(window.launcher.execCommand("date",));
+
+      }}>
+        12313
+      </div>
+    </div>
+
   )
 }
 

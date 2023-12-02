@@ -1,4 +1,5 @@
 import { BrowserWindow, screen } from 'electron'
+import { Height, Width } from './cons'
 
 const getScreenSize = () => {
   const p = screen.getCursorScreenPoint()
@@ -25,8 +26,8 @@ const getCenter = (width: number, height: number) => {
 }
 
 
-const toCenter = (win: BrowserWindow, w: number, h: number) => {
-  const { x, y } = getCenter(w, h)
+const toCenter = (win: BrowserWindow) => {
+  const { x, y } = getCenter(Width, Height)
   win.setPosition(x, y)
 }
 
