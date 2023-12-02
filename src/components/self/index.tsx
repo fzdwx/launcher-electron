@@ -2,10 +2,14 @@ import { Command } from 'cmdk'
 import React from 'react'
 
 const CommandMenu = () => {
+  const inputRef = React.useRef<HTMLInputElement>(null)
+  React.useEffect(() => {
+    inputRef.current?.focus()
+  })
 
   return (
-    <Command.Dialog open label="Global Command Menu">
-      <Command.Input />
+    <Command.Dialog className='raycast' open label="Global Command Menu">
+      <Command.Input autoFocus ref={inputRef} />
       <Command.List>
         <Command.Empty>No results found.</Command.Empty>
 
@@ -25,9 +29,7 @@ const CommandMenu = () => {
 export default function Self() {
   return (
     <>
-      <div>
-        <CommandMenu />
-      </div>
+      <CommandMenu />
     </>
   )
 }

@@ -1,9 +1,6 @@
 import { app, BrowserWindow, shell, ipcMain } from 'electron'
 import { release } from 'node:os'
 import { join } from 'node:path'
-import { update } from './update'
-import { toCenter } from './screen'
-import { initShortCut } from './shortcut'
 import initMainWin from './initMainWin';
 
 // The built directory structure
@@ -69,7 +66,7 @@ async function createMainWindow() {
   if (url) { // electron-vite-vue#298
     mainWin.loadURL(url)
     // Open devTool if the app is not packaged
-    mainWin.webContents.openDevTools()
+    // mainWin.webContents.openDevTools()
   } else {
     mainWin.loadFile(indexHtml)
   }

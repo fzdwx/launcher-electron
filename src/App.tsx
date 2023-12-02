@@ -5,9 +5,9 @@ import Self from '@/components/self';
 
 function App() {
   return (
-    <>
+    <div className='dark'>
       <Self />
-    </>
+    </div>
   )
 }
 
