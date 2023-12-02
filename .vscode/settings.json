@@ -10,5 +10,5 @@
       "url": "https://json.schemastore.org/electron-builder"
     }
   ],
-  "commentTranslate.hover.enabled": true
+  "commentTranslate.hover.enabled": true,
 }
