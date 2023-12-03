@@ -2,6 +2,7 @@
 import * as RadixDialog from '@radix-ui/react-dialog'
 import * as React from 'react'
 import { commandScore } from './command-score'
+import { openSync } from 'original-fs'
 
 type Children = { children?: React.ReactNode }
 type DivProps = React.HTMLAttributes<HTMLDivElement>
@@ -204,13 +205,18 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
           // Filter synchronously before emitting back to children
           filterItems()
           sort()
-          schedule(1, selectFirstItem)
+          if (value === "") {  // if search is empty scroll to top and select first item
+            schedule(1, scrollTop)
+            schedule(5, selectFirstItem)
+          }
+          else {
+            schedule(1, selectFirstItem)
+          }
         } else if (key === 'value') {
           // opts is a boolean referring to whether it should NOT be scrolled into view
           if (!opts) {
             // Scroll the selected item into view
-            // schedule(5, scrollSelectedIntoView)
-            schedule(1, selectFirstItem)
+            schedule(5, scrollSelectedIntoView)
           }
 
           if (propsRef.current?.value !== undefined) {
@@ -429,6 +435,10 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
       // Ensure the item is always in view
       item.scrollIntoView({ block: 'nearest' })
     }
+  }
+
+  function scrollTop() {
+    ref.current?.querySelector(LIST_SELECTOR)?.scrollTo({ top: 0 })
   }
 
   /** Getters */
