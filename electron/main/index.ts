@@ -28,8 +28,7 @@ class Launcher {
     async startBackend() {
         // check is dev
         if (process.env.NODE_ENV === 'development') {
-            const {stdout} = await exec('cd ./launcher-native && go run .')
-            console.log('stdout:', stdout);
+            console.log("please start backend manually :)")
         } else {
             const dir = path.dirname(app.getAppPath())
             const {stdout} = await exec(`sh -c ${dir}/bin/launcher-native`)
