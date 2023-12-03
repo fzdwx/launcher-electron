@@ -11,6 +11,15 @@
     "dist-electron",
     "dist"
   ],
+  "extraResources":[
+    {
+      "from": "./bin",
+      "to": "./bin",
+      "filter": [
+        "**/*"
+      ]
+    }
+  ],
   "mac": {
     "artifactName": "${productName}_${version}.${ext}",
     "target": [
