@@ -1,10 +1,12 @@
-import { NativeImage, nativeImage } from "electron";
 import * as fs from "node:fs";
 import os from "node:os";
 import util from "node:util";
+import { JSONPreset } from 'lowdb/node'
+import { join } from 'node:path';
 
 const readfile = util.promisify(fs.readFile);
 const readdir = util.promisify(fs.readdir);
+const writefile = util.promisify(fs.writeFile);
 
 const dataDir = [
   "/usr/share/applications",
@@ -52,6 +54,8 @@ interface Application {
   terminal: boolean;
   type: string;
   icon: string;
+
+  count: number;
 }
 
 const iconCache = new Map<string, string>();
@@ -114,6 +118,8 @@ const getApplications = async () => {
         if (app.name === undefined || app.exec === undefined) {
           return;
         }
+
+        app.count = await getAppRunCount(app.name)
         if (existName.has(app.name)) {
           return;
         }
@@ -128,4 +134,47 @@ const getApplications = async () => {
   return applications;
 };
 
-export { type Application, getApplications, getIcon };
+
+interface RunHistory {
+  items: RunItem[],
+}
+
+interface RunItem {
+  name: string,
+  count: number,
+}
+
+type Data = {
+  appRunHistory: RunHistory
+}
+
+const defaultData: Data = {
+  appRunHistory: {
+    items: []
+  }
+}
+
+
+
+const db = await JSONPreset<Data>(join(await window.launcher.getPath("userData"), "runAppHistory.json"), defaultData)
+await db.read()
+
+const addAppRunCount = async (name: string) => {
+  const item = db.data.appRunHistory.items.find((item) => item.name === name);
+  if (item) {
+    item.count += 1;
+  } else {
+    db.data.appRunHistory.items.push({ name, count: 1 });
+  }
+  await db.write()
+}
+
+const getAppRunCount = async (name: string) => {
+  const item = db.data.appRunHistory.items.find((item) => item.name === name);
+  if (item) {
+    return item.count
+  }
+  return 0
+}
+
+export { type Application, getApplications, getIcon, addAppRunCount };

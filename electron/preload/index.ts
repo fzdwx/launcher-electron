@@ -14,7 +14,7 @@ const callApi = (type: string, data: any) => {
 }
 
 const callApiWithRes = <I, O>(type: string, data: I) => {
-  return ipcRenderer.sendSync('launcher-api', {
+  return ipcRenderer.invoke('launcher-api', {
     type,
     data
   }) as O
@@ -26,14 +26,23 @@ window.launcher = {
   },
 
   async execCommand(command: string, args?: Array<string>) {
-    if (args && args.length > 0) {
-      return await exec(`${command} ${args?.join(' ')}`)
-    }
-    return await exec(command)
+    callApiWithRes('execCommand', {
+      command,
+      args
+    })
   },
 
   async spawn(command: string, args?: Array<string>) {
-    return await spawn(command, args ? args : [], {})
+    callApiWithRes('spawn', {
+      command,
+      args
+    })
+  },
+
+  async getPath(name: 'home' | 'appData' | 'userData' | 'sessionData' | 'temp' | 'exe' | 'module' | 'desktop' | 'documents' | 'downloads' | 'music' | 'pictures' | 'videos' | 'recent' | 'logs' | 'crashDumps') {
+    return callApiWithRes('getPath', {
+      name
+    })
   },
 
   hide() {

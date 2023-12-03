@@ -1,6 +1,9 @@
-import { Application, getApplications } from "./desktop";
+import { Application, addAppRunCount, getApplications, getIcon } from "./desktop";
 
 export {
-  getApplications,
-  type Application
+  getApplications, addAppRunCount, getIcon
+}
+
+export type {
+  Application
 }

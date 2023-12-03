@@ -1,8 +1,7 @@
 import { Application, getApplications } from "@/native"
 import { Command } from "@/cmdk"
 import React, { useEffect, useState } from "react"
-import { app } from 'electron';
-import { getIcon } from "@/native/desktop";
+import { addAppRunCount, getIcon } from "@/native";
 
 const useApplications = () => {
   const [loading, setLoading] = useState(true)
@@ -42,9 +41,9 @@ const application = () => {
   const { apps, loading } = useApplications()
   const runApplication = (app: Application) => {
     const command = app.exec.replace("%u", "").replace("%U", "")
-    const { output } = window.launcher.execCommand(command)
-    console.log(output);
+    window.launcher.execCommand(command)
     window.launcher.hide()
+    addAppRunCount(app.name)
   }
 
   return (
@@ -55,6 +54,7 @@ const application = () => {
           <Command.Item
             key={item.name}
             value={item.name}
+            data-value={item.count}
             onSelect={() => { runApplication(item) }}
           >
             <AppImage app={item} />
