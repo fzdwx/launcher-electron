@@ -10,7 +10,10 @@ func main() {
 	port := flag.Int("port", 8080, "port to listen on")
 
 	server := NewServer(port)
-	server.ListenAndServe()
+	err := server.ListenAndServe()
+	if err != nil {
+		panic(err)
+	}
 }
 
 type Server struct {
@@ -40,5 +43,6 @@ func (s *Server) ServeHTTP(writer http.ResponseWriter, request *http.Request) {
 	}
 	if request.URL.Path == "/api/runHistory" {
 		s.AddRunHistory(writer, request)
+		return
 	}
 }

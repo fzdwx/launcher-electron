@@ -1,19 +1,4 @@
 import * as fs from "node:fs";
-import os from "node:os";
-import util from "node:util";
-import {JSONPreset} from 'lowdb/node'
-import {join} from 'node:path';
-import {Low} from "lowdb/lib";
-
-const readfile = util.promisify(fs.readFile);
-const readdir = util.promisify(fs.readdir);
-const writefile = util.promisify(fs.writeFile);
-
-const dataDir = [
-    "/usr/share/applications",
-    `${os.userInfo().homedir}/.local/share/applications`,
-];
-
 const pattern = (path: string) => {
     return [
         path,
@@ -99,26 +84,5 @@ const addAppRunCount = async (app: Application) => {
         }
     })
 }
-
-
-interface RunHistory {
-    items: RunItem[],
-}
-
-interface RunItem {
-    name: string,
-    count: number,
-}
-
-type Data = {
-    appRunHistory: RunHistory
-}
-
-const defaultData: Data = {
-    appRunHistory: {
-        items: []
-    }
-}
-
 
 export {type Application, getApplications, getIcon, addAppRunCount};
