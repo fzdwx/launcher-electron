@@ -210,7 +210,7 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
             schedule(5, selectFirstItem)
           }
           else {
-            schedule(1, selectFirstItem)
+            schedule(5, selectFirstItem)
           }
         } else if (key === 'value') {
           // opts is a boolean referring to whether it should NOT be scrolled into view
