@@ -1,9 +1,9 @@
 {
   "name": "Launcher",
-  "version": "2.2.0",
+  "version": "0.1.0",
   "main": "dist-electron/main/index.js",
-  "description": "Electron Vite React boilerplate.",
-  "author": "草鞋没号 <308487730@qq.com>",
+  "description": "Application launcher",
+  "author": "fzdwx",
   "license": "MIT",
   "private": true,
   "debug": {

@@ -38,6 +38,7 @@ export default defineConfig(({ command }) => {
           vite: {
             build: {
               sourcemap,
+              target: "ESNext",
               minify: isBuild,
               outDir: 'dist-electron/main',
               rollupOptions: {
@@ -55,6 +56,7 @@ export default defineConfig(({ command }) => {
           },
           vite: {
             build: {
+              target: "ESNext",
               sourcemap: sourcemap ? 'inline' : undefined, // #332
               minify: isBuild,
               outDir: 'dist-electron/preload',

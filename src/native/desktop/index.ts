@@ -3,6 +3,7 @@ import os from "node:os";
 import util from "node:util";
 import { JSONPreset } from 'lowdb/node'
 import { join } from 'node:path';
+import { Low } from "lowdb/lib";
 
 const readfile = util.promisify(fs.readFile);
 const readdir = util.promisify(fs.readdir);
@@ -155,9 +156,13 @@ const defaultData: Data = {
 }
 
 
+let db: Low<Data>
+const init = async () => {
+  db = await JSONPreset<Data>(join(await window.launcher.getPath("userData"), "runAppHistory.json"), defaultData)
+  await db.read()
+}
 
-const db = await JSONPreset<Data>(join(await window.launcher.getPath("userData"), "runAppHistory.json"), defaultData)
-await db.read()
+init()
 
 const addAppRunCount = async (name: string) => {
   const item = db.data.appRunHistory.items.find((item) => item.name === name);
