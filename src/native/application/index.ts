@@ -1,4 +1,5 @@
 import * as fs from "node:fs";
+
 const pattern = (path: string) => {
     return [
         path,

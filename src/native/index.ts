@@ -1,4 +1,4 @@
-import { Application, addAppRunCount, getApplications, getIcon } from "./desktop";
+import { Application, addAppRunCount, getApplications, getIcon } from "./application";
 
 export {
   getApplications, addAppRunCount, getIcon

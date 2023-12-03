@@ -1,7 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
-import '@/native/node-api'
 import 'virtual:uno.css'
 import 'launcher-api/dist/index.css'
 import '@radix-ui/themes/styles.css';
