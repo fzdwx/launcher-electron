@@ -1,4 +1,4 @@
-import {BrowserWindow, app, ipcMain,clipboard} from "electron"
+import {BrowserWindow, app, ipcMain, clipboard} from "electron"
 import {toCenter} from "../main/screen";
 import * as cmd from 'node:child_process'
 import util from 'node:util'
@@ -6,12 +6,15 @@ import util from 'node:util'
 const exec = util.promisify(cmd.exec)
 const spawn = util.promisify(cmd.spawn)
 
+let LoadMainView: () => void
+
 class LauncherApi {
 
     private readonly mainWindow: BrowserWindow
 
-    constructor(mainWindow: BrowserWindow) {
+    constructor(mainWindow: Electron.BrowserWindow, loadMainView: () => void) {
         this.mainWindow = mainWindow
+        LoadMainView = loadMainView
     }
 
     public hello = () => {
@@ -21,7 +24,15 @@ class LauncherApi {
     public hide = () => {
         this.mainWindow.blur()
         this.mainWindow.hide()
-        this.mainWindow.reload()
+        LoadMainView()
+    }
+
+    public loadDevView() {
+        this.mainWindow.loadURL('http://localhost:35678')
+    }
+
+    public loadMainView() {
+        LoadMainView()
     }
 
     public show = () => {
@@ -60,15 +71,10 @@ class LauncherApi {
         const {text} = data
         clipboard.writeText(text)
     }
-
-    public loadDevView() {
-        this.mainWindow.loadURL('http://localhost:35678')
-    }
 }
 
-
-const registerApi = (mainWindow: BrowserWindow) => {
-    const a = new LauncherApi(mainWindow)
+const registerApi = (mainWindow: Electron.BrowserWindow, loadMainView: () => void) => {
+    const a = new LauncherApi(mainWindow, loadMainView)
 
     ipcMain.handle('launcher-api', async (event, arg) => {
         const window = arg.winId ? BrowserWindow.fromId(arg.winId) : mainWindow;

@@ -4,8 +4,6 @@ import (
 	"flag"
 	"fmt"
 	"net/http"
-	"os/exec"
-	"strings"
 )
 
 func main() {
@@ -16,7 +14,8 @@ func main() {
 }
 
 type Server struct {
-	port int
+	port            int
+	applicationList *[]*Application
 }
 
 func NewServer(port *int) *Server {
@@ -24,32 +23,19 @@ func NewServer(port *int) *Server {
 		port: *port,
 	}
 
-	s.mount()
+	go s.refreshApplication()
+
 	return s
 }
 
 func (s *Server) ListenAndServe() error {
 	fmt.Println(fmt.Sprintf("Listening on http://localhost:%d", s.port))
-	return http.ListenAndServe(fmt.Sprintf(":%d", s.port), nil)
+	return http.ListenAndServe(fmt.Sprintf(":%d", s.port), new(Server))
 }
 
-func (s *Server) mount() {
-	http.HandleFunc("/", func(writer http.ResponseWriter, request *http.Request) {
-		fmt.Fprintf(writer, "Hello, World!")
-	})
-	http.HandleFunc("/getSelection", s.GetSelection)
-}
-
-func (s *Server) GetSelection(w http.ResponseWriter, r *http.Request) {
-	var (
-		command = exec.Command("xclip", "-o")
-		out     strings.Builder
-	)
-
-	command.Stdout = &out
-	if err := command.Run(); err != nil {
-		fmt.Fprintf(w, "error: %v", err)
+func (s *Server) ServeHTTP(writer http.ResponseWriter, request *http.Request) {
+	if request.URL.Path == "/api/applications" {
+		s.ListApplication(writer, request)
 		return
 	}
-	fmt.Fprintf(w, out.String())
 }

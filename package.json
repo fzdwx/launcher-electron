@@ -22,7 +22,7 @@
     "@radix-ui/themes": "^2.0.1",
     "electron-updater": "^6.1.7",
     "jotai": "^2.6.0",
-    "launcher-api": "^0.6.0",
+    "launcher-api": "^0.6.1",
     "lowdb": "^6.1.1"
   },
   "devDependencies": {

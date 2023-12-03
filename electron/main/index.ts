@@ -22,7 +22,7 @@ class Launcher {
 
     createWindow() {
         this.init()
-        registerApi(this.getWindow())
+        registerApi(this.getWindow(), this.loadMainView)
     }
 
     async startBackend() {

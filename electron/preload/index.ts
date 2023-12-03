@@ -63,5 +63,9 @@ window.launcher = {
 
     loadDevView() {
         callApi('loadDevView', {})
+    },
+
+    loadMainView() {
+        callApi('loadMainView', {})
     }
 }
