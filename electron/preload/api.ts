@@ -90,4 +90,4 @@ const registerApi = (mainWindow: Electron.BrowserWindow, loadMainView: () => voi
     })
 }
 
-export {registerApi, LauncherApi as api}
+export {registerApi, LauncherApi}

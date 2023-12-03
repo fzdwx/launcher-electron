@@ -6,6 +6,7 @@ import (
 	"github.com/eric-song-nop/desktop"
 	"github.com/fzdwx/iter"
 	"github.com/fzdwx/iter/stream"
+	"github.com/samber/lo"
 	"net/http"
 	"time"
 )
@@ -64,7 +65,9 @@ func (s *Server) doRefresh() {
 		},
 	).ToArray()
 
-	applications = array
+	applications = lo.UniqBy(array, func(item *Application) string {
+		return item.Name
+	})
 }
 
 func entryIntoApplications(entry *desktop.Entry) []*Application {

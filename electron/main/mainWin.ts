@@ -77,7 +77,7 @@ export default () => {
     mainWin.setMaximumSize(Width, Height)
     mainWin.setMinimumSize(Width, Height)
     toCenter(mainWin)
-    initShortCut(mainWin)
+    initShortCut(mainWin,loadMainView)
 
     // // Test actively push message to the Electron-Renderer
     // mainWin.webContents.on('did-finish-load', () => {
