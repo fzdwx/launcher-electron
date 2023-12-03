@@ -209,7 +209,8 @@ const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwarded
           // opts is a boolean referring to whether it should NOT be scrolled into view
           if (!opts) {
             // Scroll the selected item into view
-            schedule(5, scrollSelectedIntoView)
+            // schedule(5, scrollSelectedIntoView)
+            schedule(1, selectFirstItem)
           }
 
           if (propsRef.current?.value !== undefined) {

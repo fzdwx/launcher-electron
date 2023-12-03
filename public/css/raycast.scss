@@ -1,13 +1,13 @@
 .raycast {
-  ::-webkit-scrollbar {
-    width: 0;
-  }
+  // ::-webkit-scrollbar {
+  //   width: 0;
+  // }
 
-  scrollbar-width: none;
-  /* firefox */
-  -ms-overflow-style: none;
-  /* IE 10+ */
-  overflow: auto;
+  // scrollbar-width: none;
+  // /* firefox */
+  // -ms-overflow-style: none;
+  // /* IE 10+ */
+  // overflow: auto;
 
   [cmdk-root] {
     max-width: 540px;
@@ -82,6 +82,7 @@
     width: 100%;
     font-size: 15px;
     padding: 8px 16px;
+    margin-top: 8px;
     outline: none;
     background: var(--bg);
     color: var(--gray12);
@@ -191,8 +192,8 @@
 
   [cmdk-list] {
     padding: 0 8px;
-    min-height: 478px;
-    height: 478px;
+    min-height: 470px;
+    height: 470px;
     // height: var(--cmdk-list-height);
     overflow: hidden;
     overscroll-behavior: contain;
@@ -401,6 +402,8 @@
   [cmdk-list] {
     padding: 8px;
     overflow: auto;
+    min-height: 200px;
+    height: 200px;
     overscroll-behavior: contain;
     transition: 100ms ease;
     transition-property: height;
