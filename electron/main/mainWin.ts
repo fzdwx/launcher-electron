@@ -1,4 +1,4 @@
-import { BrowserWindow } from "electron"
+import { BrowserView, BrowserWindow } from "electron"
 import { Height, Width } from "./cons"
 import { join } from 'node:path'
 import { release } from 'node:os'
@@ -29,7 +29,7 @@ const indexHtml = join(process.env.DIST, 'index.html')
 
 
 export default () => {
-  let mainWin: any
+  let mainWin: BrowserWindow
 
   const init = () => {
     createWindow()
@@ -60,13 +60,14 @@ export default () => {
     if (url) { // electron-vite-vue#298
       mainWin.loadURL(url)
       // Open devTool if the app is not packaged
-      mainWin.webContents.openDevTools()
+      // mainWin.webContents.openDevTools()
     } else {
       mainWin.loadFile(indexHtml)
     }
 
 
     mainWin.on('close', () => {
+      //@ts-ignore
       mainWin = null
     })
 
@@ -88,15 +89,27 @@ export default () => {
     //   if (url.startsWith('https:')) shell.openExternal(url)
     //   return { action: 'deny' }
     // })
+
   }
 
   const getWindow = () => {
     return mainWin
   }
 
+  const loadMainView = () => {
+    if (url) { // electron-vite-vue#298
+      mainWin.loadURL(url)
+      // Open devTool if the app is not packaged
+      // mainWin.webContents.openDevTools()
+    } else {
+      mainWin.loadFile(indexHtml)
+    }
+  }
+
   return {
     init,
-    getWindow
+    getWindow,
+    loadMainView
   }
 }
 

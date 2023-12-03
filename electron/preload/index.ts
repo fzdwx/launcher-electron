@@ -1,11 +1,5 @@
 import { ipcRenderer } from "electron"
 
-import * as cmd from 'node:child_process'
-import util from 'node:util'
-
-const exec = util.promisify(cmd.exec)
-const spawn = util.promisify(cmd.spawn)
-
 const callApi = (type: string, data: any) => {
   ipcRenderer.send('launcher-api', {
     type,
@@ -47,5 +41,9 @@ window.launcher = {
 
   hide() {
     callApi('hide', {})
+  },
+
+  show() {
+    callApi('show', {})
   }
 }
