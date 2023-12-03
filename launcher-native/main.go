@@ -33,7 +33,7 @@ func NewServer(port *int) *Server {
 
 func (s *Server) ListenAndServe() error {
 	fmt.Println(fmt.Sprintf("Listening on http://localhost:%d", s.port))
-	return http.ListenAndServe(fmt.Sprintf(":%d", s.port), new(Server))
+	return http.ListenAndServe(fmt.Sprintf(":%d", s.port), s)
 }
 
 func (s *Server) ServeHTTP(writer http.ResponseWriter, request *http.Request) {
