@@ -85,6 +85,21 @@ const getApplications = async () => {
     return await resp.json() as Application[]
 };
 
+const addAppRunCount = async (app: Application) => {
+    await fetch("http://localhost:8080/api/runHistory", {
+        method: "POST",
+        body: JSON.stringify({
+            name: app.name,
+            runType: "app",
+            cmd: app.exec,
+            terminal: app.terminal,
+        }),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+}
+
 
 interface RunHistory {
     items: RunItem[],
@@ -105,31 +120,5 @@ const defaultData: Data = {
     }
 }
 
-
-let db: Low<Data>
-const init = async () => {
-    db = await JSONPreset<Data>(join(await window.launcher.getPath("userData"), "runAppHistory.json"), defaultData)
-    await db.read()
-}
-
-init()
-
-const addAppRunCount = async (name: string) => {
-    const item = db.data.appRunHistory.items.find((item) => item.name === name);
-    if (item) {
-        item.count += 1;
-    } else {
-        db.data.appRunHistory.items.push({name, count: 1});
-    }
-    await db.write()
-}
-
-const getAppRunCount = async (name: string) => {
-    const item = db.data.appRunHistory.items.find((item) => item.name === name);
-    if (item) {
-        return item.count
-    }
-    return 0
-}
 
 export {type Application, getApplications, getIcon, addAppRunCount};

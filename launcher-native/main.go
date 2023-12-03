@@ -38,4 +38,7 @@ func (s *Server) ServeHTTP(writer http.ResponseWriter, request *http.Request) {
 		s.ListApplication(writer, request)
 		return
 	}
+	if request.URL.Path == "/api/runHistory" {
+		s.AddRunHistory(writer, request)
+	}
 }

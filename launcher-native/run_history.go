@@ -1,9 +1,52 @@
 package main
 
 import (
+	"encoding/json"
 	"github.com/fzdwx/launcher/launcher-native/fileutil"
+	"net/http"
+	"os"
+	"strings"
 	"time"
 )
+
+type AddRunHistoryReq struct {
+	Name     string `json:"name"`
+	RunType  string `json:"runType"`
+	Cmd      string `json:"cmd"`
+	Terminal bool   `json:"terminal"`
+}
+
+func (s *Server) AddRunHistory(writer http.ResponseWriter, request *http.Request) {
+	var req AddRunHistoryReq
+	err := json.NewDecoder(request.Body).Decode(&req)
+	if err != nil {
+		http.Error(writer, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	if strings.TrimSpace(req.Cmd) == "" {
+		return
+	}
+
+	history, err := GetHistory()
+	if err != nil {
+		http.Error(writer, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	history.Add(req.Name, req.RunType, req.Cmd, req.Terminal)
+	bytes, err := json.Marshal(history)
+	if err != nil {
+		http.Error(writer, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	err = os.WriteFile(fileutil.RunHistory(), bytes, os.ModePerm)
+	if err != nil {
+		http.Error(writer, err.Error(), http.StatusInternalServerError)
+		return
+	}
+}
 
 func GetHistory() (*RunHistory, error) {
 	path := fileutil.RunHistory()

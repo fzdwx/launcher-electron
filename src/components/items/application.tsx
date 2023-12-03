@@ -7,7 +7,6 @@ const useApplications = () => {
   const [loading, setLoading] = useState(true)
   const [apps, setApps] = useState<Application[]>([])
 
-
   useEffect(() => {
     setLoading(true)
     getApplications().then((apps) => {
@@ -45,12 +44,11 @@ const application = () => {
     const command = app.exec.replace("%u", "").replace("%U", "")
     window.launcher.execCommand(command)
     window.launcher.hide()
-    addAppRunCount(app.name)
+    addAppRunCount(app)
   }
 
   return (
     <>
-      {loading && <Command.Loading>Fetching words…</Command.Loading>}
       <Command.Group heading="Applications">
         {apps.map((item) => (
           <Command.Item
