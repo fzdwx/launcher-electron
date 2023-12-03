@@ -59,5 +59,9 @@ window.launcher = {
 
     show() {
         callApi('show', {})
+    },
+
+    loadDevView() {
+        callApi('loadDevView', {})
     }
 }

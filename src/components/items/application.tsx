@@ -1,5 +1,5 @@
 import { Application, getApplications } from "@/native"
-import { Command } from "@/cmdk"
+import { Command } from "launcher-api"
 import React, { useEffect, useState } from "react"
 import { addAppRunCount, getIcon } from "@/native";
 
@@ -30,7 +30,7 @@ const AppImage = ({ app }: { app: Application }) => {
   const image = getIcon(app)
   if (image) {
     return (<>
-      <img className="w-4" src={image} />
+      <img alt="icon" className="w-4" src={image} />
     </>)
   }
   return (

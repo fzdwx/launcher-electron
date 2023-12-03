@@ -40,7 +40,6 @@ class Launcher {
 const launcher = new Launcher()
 app.whenReady().then(async () => {
     launcher.createWindow()
-    launcher.getWindow().webContents.openDevTools()
     await launcher.startBackend()
 })
 

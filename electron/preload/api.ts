@@ -60,6 +60,10 @@ class LauncherApi {
         const {text} = data
         clipboard.writeText(text)
     }
+
+    public loadDevView() {
+        this.mainWindow.loadURL('http://localhost:35678')
+    }
 }
 
 

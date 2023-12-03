@@ -1,4 +1,4 @@
-import { Command } from "@/cmdk";
+import { Command } from "launcher-api";
 
 function SubItem({ children, shortcut }: { children: React.ReactNode; shortcut: string }) {
   return (
