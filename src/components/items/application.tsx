@@ -11,7 +11,9 @@ const useApplications = () => {
   useEffect(() => {
     setLoading(true)
     getApplications().then((apps) => {
-      setApps(apps)
+      setApps(apps.sort((a, b) => {
+        return b.count - a.count
+      }))
       setLoading(false)
     }).catch((err) => {
       console.log(err)
