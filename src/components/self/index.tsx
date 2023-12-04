@@ -1,9 +1,8 @@
-import {Command} from 'launcher-api'
+import {Command, RaycastLightIcon} from 'launcher-api'
 import React, {useState} from 'react'
-import {RaycastLightIcon} from '../icon'
-import {SubCommand} from '../subCommand'
 import Application from '../items/application'
 import Extension from "@/components/items/extension";
+import {SubCommand} from "@/components/subCommand";
 
 const CommandMenu = () => {
     const inputRef = React.useRef<HTMLInputElement>(null)
